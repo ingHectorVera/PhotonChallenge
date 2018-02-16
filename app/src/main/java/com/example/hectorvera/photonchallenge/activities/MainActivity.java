@@ -10,7 +10,10 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.hectorvera.photonchallenge.Library;
 import com.example.hectorvera.photonchallenge.R;
+import com.example.hectorvera.photonchallenge.model.PathSeeker;
+import com.example.hectorvera.photonchallenge.model.Utils;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -18,7 +21,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView txtOutput;
     private EditText eTxtInput;
     private Button btnRunTest;
-    private String txtTest = null;
+    //private String txtTest = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,40 +51,40 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        txtTest = null;
+        String txtTest = null;
         switch (v.getId()) {
             case R.id.rdBtnTest1:
                 if(rdBtnTest1.isChecked()) {
-                    txtTest = rdBtnTest1.getText().toString();
                     eTxtInput.setEnabled(false);
-                    btnRunTest.setEnabled(true);
+                    btnRunTest.setEnabled(false);
+                    eTxtInput.setText(Utils.printIntArray(Library.TEST_1));
                 }
                 break;
             case R.id.rdBtnTest2:
                 if(rdBtnTest2.isChecked()) {
-                    txtTest = rdBtnTest2.getText().toString();
                     eTxtInput.setEnabled(false);
-                    btnRunTest.setEnabled(true);
+                    btnRunTest.setEnabled(false);
+                    eTxtInput.setText(Utils.printIntArray(Library.TEST_2));
                 }
                 break;
             case R.id.rdBtnTest3:
                 if(rdBtnTest3.isChecked()) {
-                    txtTest = rdBtnTest3.getText().toString();
                     eTxtInput.setEnabled(false);
-                    btnRunTest.setEnabled(true);
+                    btnRunTest.setEnabled(false);
+                    eTxtInput.setText(Utils.printIntArray(Library.TEST_3));
                 }
                 break;
             case R.id.rdBtnOtherTest:
                 if(rdBtnOtherTest.isChecked()) {
-                    txtTest = rdBtnOtherTest.getText().toString();
+                    eTxtInput.setText("");
                     eTxtInput.setEnabled(true);
                     btnRunTest.setEnabled(true);
                 }
                 break;
             case R.id.btnRunTest:
                 txtTest = eTxtInput.getText().toString();
-                txtOutput.setText(txtTest);
-                Toast.makeText(getApplicationContext(), txtTest, Toast.LENGTH_SHORT).show();
+                //txtOutput.setText(PathSeeker.seekPath(Utils.convertStringToIntArray(txtTest)));
+                txtOutput.setText("OnDevelop");
                 break;
         }
     }

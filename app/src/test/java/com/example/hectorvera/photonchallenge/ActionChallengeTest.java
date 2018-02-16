@@ -13,11 +13,6 @@ import static org.junit.Assert.*;
  */
 public class ActionChallengeTest {
     @Test
-    public void addition_isCorrect() throws Exception {
-        assertEquals(4, 2 + 2);
-    }
-
-    @Test
     public void Test1() throws Exception {
         assertEquals(Library.RESULT_1, PathSeeker.seekPath(Library.TEST_1));
     }
