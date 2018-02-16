@@ -83,6 +83,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btnRunTest:
                 txtTest = eTxtInput.getText().toString();
+                Utils.convertStringToIntArray(txtTest);
                 //txtOutput.setText(PathSeeker.seekPath(Utils.convertStringToIntArray(txtTest)));
                 txtOutput.setText("OnDevelop");
                 break;

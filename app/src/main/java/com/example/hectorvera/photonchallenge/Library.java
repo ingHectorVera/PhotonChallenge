@@ -3,6 +3,10 @@ package com.example.hectorvera.photonchallenge;
 public class Library {
 
     public static final int MAX_COST = 50;
+    public static final int FIRST_ARRAY_ELEMENT = 0;
+    public static final String RETURN_LINE_DELIM = "\n";
+    public static final String SPACE_DELIM = " ";
+
     public static final int TEST_1 [][] = {{3,4,1,2,8,6},{6,1,8,2,7,4},{5,9,3,9,9,5},{8,4,1,3,2,6},{3,7,2,8,6,4}};
     public static final String RESULT_1 = "Yes,16,1 2 3 4 4 5";
 
