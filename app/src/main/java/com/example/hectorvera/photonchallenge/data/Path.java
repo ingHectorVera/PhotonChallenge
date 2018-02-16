@@ -25,6 +25,8 @@ public class Path {
 
     public void setSteps(ArrayList<Integer> steps) { this.steps = steps; }
 
+    public void addStep(int step) { this.steps.add(step); }
+
     public String toString() {
         StringBuilder sSteps = new StringBuilder();
         for (int i = 0; i < steps.size(); i++) {
