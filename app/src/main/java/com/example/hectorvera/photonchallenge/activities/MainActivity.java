@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     eTxtInput.setEnabled(false);
                     btnRunTest.setEnabled(false);
                     eTxtInput.setText(Utils.printIntArray(Library.TEST_1));
+                    txtOutput.setText(PathSeeker.seekPath(Library.TEST_1));
                 }
                 break;
             case R.id.rdBtnTest2:
@@ -65,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     eTxtInput.setEnabled(false);
                     btnRunTest.setEnabled(false);
                     eTxtInput.setText(Utils.printIntArray(Library.TEST_2));
+                    txtOutput.setText(PathSeeker.seekPath(Library.TEST_2));
                 }
                 break;
             case R.id.rdBtnTest3:
@@ -72,6 +74,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     eTxtInput.setEnabled(false);
                     btnRunTest.setEnabled(false);
                     eTxtInput.setText(Utils.printIntArray(Library.TEST_3));
+                    txtOutput.setText(PathSeeker.seekPath(Library.TEST_3));
                 }
                 break;
             case R.id.rdBtnOtherTest:
@@ -84,8 +87,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btnRunTest:
                 txtTest = eTxtInput.getText().toString();
                 Utils.convertStringToIntArray(txtTest);
-                //txtOutput.setText(PathSeeker.seekPath(Utils.convertStringToIntArray(txtTest)));
-                txtOutput.setText("OnDevelop");
+                txtOutput.setText(PathSeeker.seekPath(Utils.convertStringToIntArray(txtTest)));
+                //txtOutput.setText("OnDevelop");
                 break;
         }
     }
