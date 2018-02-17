@@ -35,7 +35,7 @@ public class PathSeeker {
             currentPath.setCost(currentPath.getCost() + cost);
             currentPath.setComplete(true);
             return currentPath;
-        } else if (column != (columns - 1)){
+        } else {
             if ((column == Library.FIRST_ARRAY_ELEMENT) ) {
                 currentPath.setCost(matrix[Library.FIRST_ARRAY_ELEMENT][Library.FIRST_ARRAY_ELEMENT]);
             } else {
@@ -94,8 +94,6 @@ public class PathSeeker {
                 }
             }
             return walkPath(matrix, rows, columns, nRow, nextColumn, nCost, currentPath);
-        } else {
-            return null;
         }
     }
 }
