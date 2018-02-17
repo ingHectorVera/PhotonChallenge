@@ -18,7 +18,7 @@ public class PathSeeker {
         Path lowestPath = null;
         for ( int i = 0; i < rows; i++) {
             Path currentPath = new Path();
-            Path tempPath = walkPath(matrix, rows, columns, i, Library.FIRST_ARRAY_ELEMENT, currentPath);
+            Path tempPath = walkPath(matrix, rows, columns, i, Library.FIRST_ARRAY_ELEMENT, 0, currentPath);
             if (lowestPath == null || (lowestPath.getCost() > tempPath.getCost())) {
                 lowestPath = tempPath;
             }
@@ -26,52 +26,76 @@ public class PathSeeker {
         return lowestPath.toString();
     }
 
-    private static Path walkPath(int [][] matrix, int rows, int columns,  int row, int column, Path currentPath) {
-        if (currentPath.getCost() > Library.MAX_COST || column == columns) {
-            if (column == columns) {
-                currentPath.setComplete(true);
-            }
+    private static Path walkPath(int [][] matrix, int rows, int columns,  int row, int column, int cost, Path currentPath) {
+        if ((currentPath.getCost() + cost) >= Library.MAX_COST ) {
+            currentPath.setComplete(false);
             return currentPath;
-        } else {
-            int nextRow = 0;
-            int prevRow = 0;
-            int nRow = 0;
-            int nextColumn = column + 1;
-            currentPath.setCost(currentPath.getCost() + matrix[row][column]);
+        } else if (column == (columns - 1)) {
+            currentPath.addStep(column + 1);
+            currentPath.setCost(currentPath.getCost() + cost);
+            currentPath.setComplete(true);
+            return currentPath;
+        } else if (column != (columns - 1)){
+            if ((column == Library.FIRST_ARRAY_ELEMENT) ) {
+                currentPath.setCost(matrix[Library.FIRST_ARRAY_ELEMENT][Library.FIRST_ARRAY_ELEMENT]);
+            } else {
+                currentPath.setCost(currentPath.getCost() + cost);
+            }
             currentPath.addStep(row + 1);
+            int nextColumn = column + 1;
+            int nRow = 0;
+            int nCost = 0;
             if (row == Library.FIRST_ARRAY_ELEMENT) {
-                nRow = row + 1;
-                if (matrix[row][nextColumn] < matrix[nRow][nextColumn]) {
-                    nextRow = row;
-                } else {
-                    nextRow = nRow;
+                int nextRow = row + 1;
+                if (matrix[row][nextColumn] <= matrix[nextRow][nextColumn]) {
+                    nRow = row;
+                    nCost = matrix[row][nextColumn];
+                } else if (matrix[row][nextColumn] > matrix[nextRow][nextColumn]) {
+                    nRow = nextRow;
+                    nCost = matrix[nextRow][nextColumn];
+                }
+            } else if (row == (rows -1)) {
+                ArrayList<StoreData> data = new ArrayList<>();
+                int prevRow = row - 1;
+                int nextRow = Library.FIRST_ARRAY_ELEMENT;
+                data.add(new StoreData(prevRow, matrix[prevRow][nextColumn]));
+                data.add(new StoreData(row, matrix[row][nextColumn]));
+                data.add(new StoreData(nextRow, matrix[nextRow][nextColumn]));
+                int tempCost = 0;
+                for (int i = 0; i<data.size(); i++) {
+                    if (i == 0) {
+                        tempCost = data.get(i).getCost();
+                        nRow = data.get(i).getRow();
+                    } else {
+                        if (tempCost > data.get(i).getCost()) {
+                            tempCost = data.get(i).getCost();
+                            nRow = data.get(i).getRow();
+                        }
+                    }
                 }
             } else {
-                if (row == (rows - 1)) {
-                    prevRow = row - 1;
-                    nRow = Library.FIRST_ARRAY_ELEMENT;
-                } else {
-                    prevRow = row -1;
-                    nRow = row + 1;
-                }
-                ArrayList<StoreData> costsData = new ArrayList<>();
-                costsData.add(new StoreData(prevRow, matrix[column][prevRow]));
-                costsData.add(new StoreData(row, matrix[column][row]));
-                costsData.add(new StoreData(nRow, matrix[column][nRow]));
-                int cost = 0;
-                for (int i =0; i < costsData.size(); i++) {
-                    if (i ==0) {
-                        cost = costsData.get(i).getCost();
-                        nextRow = costsData.get(i).getRow();
+                ArrayList<StoreData> data = new ArrayList<>();
+                int prevRow = row - 1;
+                int nextRow = row + 1;
+                data.add(new StoreData(prevRow, matrix[prevRow][nextColumn]));
+                data.add(new StoreData(row, matrix[row][nextColumn]));
+                data.add(new StoreData(nextRow, matrix[nextRow][nextColumn]));
+                int tempCost = 0;
+                for (int i = 0; i<data.size(); i++) {
+                    if (i == 0) {
+                        tempCost = data.get(i).getCost();
+                        nRow = data.get(i).getRow();
                     } else {
-                        if (cost > costsData.get(i).getCost()) {
-                            cost = costsData.get(i).getCost();
-                            nextRow = costsData.get(i).getRow();
+                        if (tempCost > data.get(i).getCost()) {
+                            tempCost = data.get(i).getCost();
+                            nRow = data.get(i).getRow();
                         }
                     }
                 }
             }
-            return walkPath(matrix,rows,columns,nextRow, nextColumn, currentPath );
+            return walkPath(matrix, rows, columns, nRow, nextColumn, nCost, currentPath);
+        } else {
+            return null;
         }
     }
 }
